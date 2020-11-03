@@ -17,3 +17,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('logTest',function(){
+    \Illuminate\Support\Facades\Log::info('test');
+});
