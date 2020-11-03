@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Jobs\ProcessPayment;
 use App\Jobs\SendLead;
 use Illuminate\Http\Request;
@@ -10,7 +9,7 @@ use Illuminate\Support\Str;
 
 class BackgroundTaskController extends Controller
 {
-    public function __invoke(Request $request)
+    public function store(Request $request)
     {
         $this->validate($request, [
             'tasks' => 'required|json'
@@ -24,6 +23,11 @@ class BackgroundTaskController extends Controller
             elseif ($task['category'] == 'amocrm')
                 SendLead::dispatch($task['data']['lead_id'])->onQueue('amocrm');
         }
+        return redirect('/logs');
+    }
 
+    public function index()
+    {
+        return view('tasks.index');
     }
 }

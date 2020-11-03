@@ -14,3 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::prefix('tasks')->group(function(){
+    Route::get('/','BackgroundTaskController@index');
+    Route::post('store','BackgroundTaskController@store');
+});
